@@ -163,7 +163,6 @@
     // Return NO if you do not want the item to be re-orderable.
     return YES;
 }
-This is a useless comment.. 
 */
 
 #pragma mark - Table view delegate
