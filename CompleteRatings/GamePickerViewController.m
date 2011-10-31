@@ -6,6 +6,9 @@
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
+
+//The import statement. 
+//I know how you feel about it. Don't be ashamed or dismayed in any shape or form. It's not that big of a deal! 
 #import "GamePickerViewController.h"
 
 

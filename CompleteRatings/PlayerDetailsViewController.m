@@ -95,6 +95,8 @@
     [super viewDidDisappear:animated];
 }
 
+//It happens! All the time. 
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
@@ -127,7 +129,7 @@
     }
     return self;
 }
-
+//the part where we add useless commits. 
 
 #pragma mark - GamePickerViewControllerDelegate
 
@@ -137,4 +139,6 @@
     self.detailLabel.text = game;
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+//Okay so this should be the interesting part. 
 @end
