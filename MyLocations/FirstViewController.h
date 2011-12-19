@@ -2,7 +2,7 @@
 //  FirstViewController.h
 //  MyLocations
 //
-//  Created by Maijid  Moujaled on 12/19/11.
+//  Created by Maijid  Moujaled (aka. Dr.Jid) on 12/19/11.
 //  Copyright (c) 2011 Grinnell College. All rights reserved.
 //
 
