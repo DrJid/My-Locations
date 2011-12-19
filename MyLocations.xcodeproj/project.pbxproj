@@ -20,6 +20,7 @@
 		16BEBCDE149FA69D00E2AA3F /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16BEBCDD149FA69D00E2AA3F /* SecondViewController.m */; };
 		16BEBCE0149FA69D00E2AA3F /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 16BEBCDF149FA69D00E2AA3F /* second.png */; };
 		16BEBCE2149FA69D00E2AA3F /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16BEBCE1149FA69D00E2AA3F /* second@2x.png */; };
+		16BEBCE9149FAFAF00E2AA3F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16BEBCE8149FAFAF00E2AA3F /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,7 +35,7 @@
 		16BEBCCF149FA69D00E2AA3F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		16BEBCD0149FA69D00E2AA3F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		16BEBCD3149FA69D00E2AA3F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		16BEBCD5149FA69D00E2AA3F /* CurrentLocationViewController.h */ = {isa = PBXFileReference; path = CurrentLocationViewController.h; sourceTree = "<group>"; };
+		16BEBCD5149FA69D00E2AA3F /* CurrentLocationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CurrentLocationViewController.h; sourceTree = "<group>"; };
 		16BEBCD6149FA69D00E2AA3F /* CurrentLocationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CurrentLocationViewController.m; sourceTree = "<group>"; };
 		16BEBCD8149FA69D00E2AA3F /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
 		16BEBCDA149FA69D00E2AA3F /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
@@ -42,6 +43,7 @@
 		16BEBCDD149FA69D00E2AA3F /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		16BEBCDF149FA69D00E2AA3F /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
 		16BEBCE1149FA69D00E2AA3F /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
+		16BEBCE8149FAFAF00E2AA3F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16BEBCE9149FAFAF00E2AA3F /* CoreLocation.framework in Frameworks */,
 				16BEBCC1149FA69D00E2AA3F /* UIKit.framework in Frameworks */,
 				16BEBCC3149FA69D00E2AA3F /* Foundation.framework in Frameworks */,
 				16BEBCC5149FA69D00E2AA3F /* CoreGraphics.framework in Frameworks */,
@@ -61,6 +64,7 @@
 		16BEBCB1149FA69C00E2AA3F = {
 			isa = PBXGroup;
 			children = (
+				16BEBCE8149FAFAF00E2AA3F /* CoreLocation.framework */,
 				16BEBCC6149FA69D00E2AA3F /* MyLocations */,
 				16BEBCBF149FA69D00E2AA3F /* Frameworks */,
 				16BEBCBD149FA69C00E2AA3F /* Products */,
