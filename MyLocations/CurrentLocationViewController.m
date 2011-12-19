@@ -62,6 +62,13 @@
     self.getButton = nil;
 }
 
+- (NSString *)stringFromPlaceMark:(CLPlacemark *)thePlacemark
+{
+    return [NSString stringWithFormat:@"%@ %@\n%@ %@ %@",
+            thePlacemark.subThoroughfare, thePlacemark.thoroughfare,
+            thePlacemark.locality, thePlacemark.administrativeArea, thePlacemark.postalCode];
+}
+
 
 - (void)updateLabels
 {
@@ -70,6 +77,17 @@
         self.latitudeLabel.text = [NSString stringWithFormat:@"%.8f", location.coordinate.latitude];
         self.longitudeLabel.text = [NSString stringWithFormat:@"%.8f", location.coordinate.longitude];
         self.tagButton.hidden = NO;
+        
+        if (placemark != nil) {
+            self.addressLabel.text = [self stringFromPlaceMark:placemark];
+        } else if (performingReverseGeocoding) {
+            self.addressLabel.text = @"Searching for Address...";
+        } else if (lastGeocodingError != nil) {
+            self.addressLabel.text = @"Error finding Address";
+        } else {
+            self.addressLabel.text = @"No Address Found";
+        }
+        
     } else {
         self.messageLabel.text = @"Press the Button to Start";
         self.latitudeLabel.text = @"";
