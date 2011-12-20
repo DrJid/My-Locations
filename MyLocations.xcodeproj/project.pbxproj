@@ -23,6 +23,12 @@
 		16BEBCE9149FAFAF00E2AA3F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16BEBCE8149FAFAF00E2AA3F /* CoreLocation.framework */; };
 		16BEBCEC149FFD1900E2AA3F /* LocationDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16BEBCEB149FFD1900E2AA3F /* LocationDetailsViewController.m */; };
 		16BEBCF314A0636C00E2AA3F /* CategoryPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16BEBCF214A0636C00E2AA3F /* CategoryPickerViewController.m */; };
+		16BEBCF614A070D100E2AA3F /* HudView.m in Sources */ = {isa = PBXBuildFile; fileRef = 16BEBCF514A070D100E2AA3F /* HudView.m */; };
+		16BEBCF914A075CF00E2AA3F /* Checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 16BEBCF714A075CF00E2AA3F /* Checkmark.png */; };
+		16BEBCFA14A075CF00E2AA3F /* Checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16BEBCF814A075CF00E2AA3F /* Checkmark@2x.png */; };
+		16BEBCFC14A07FE000E2AA3F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16BEBCFB14A07FE000E2AA3F /* CoreData.framework */; };
+		16BEBCFF14A0801700E2AA3F /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 16BEBCFD14A0801700E2AA3F /* DataModel.xcdatamodeld */; };
+		16BEBD0214A082BB00E2AA3F /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 16BEBD0114A082BB00E2AA3F /* Location.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +56,14 @@
 		16BEBCEB149FFD1900E2AA3F /* LocationDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationDetailsViewController.m; sourceTree = "<group>"; };
 		16BEBCF114A0636B00E2AA3F /* CategoryPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryPickerViewController.h; sourceTree = "<group>"; };
 		16BEBCF214A0636C00E2AA3F /* CategoryPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryPickerViewController.m; sourceTree = "<group>"; };
+		16BEBCF414A070D100E2AA3F /* HudView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HudView.h; sourceTree = "<group>"; };
+		16BEBCF514A070D100E2AA3F /* HudView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HudView.m; sourceTree = "<group>"; };
+		16BEBCF714A075CF00E2AA3F /* Checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Checkmark.png; sourceTree = "<group>"; };
+		16BEBCF814A075CF00E2AA3F /* Checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Checkmark@2x.png"; sourceTree = "<group>"; };
+		16BEBCFB14A07FE000E2AA3F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		16BEBCFE14A0801700E2AA3F /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		16BEBD0014A082BA00E2AA3F /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
+		16BEBD0114A082BB00E2AA3F /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16BEBCFC14A07FE000E2AA3F /* CoreData.framework in Frameworks */,
 				16BEBCE9149FAFAF00E2AA3F /* CoreLocation.framework in Frameworks */,
 				16BEBCC1149FA69D00E2AA3F /* UIKit.framework in Frameworks */,
 				16BEBCC3149FA69D00E2AA3F /* Foundation.framework in Frameworks */,
@@ -70,6 +85,7 @@
 		16BEBCB1149FA69C00E2AA3F = {
 			isa = PBXGroup;
 			children = (
+				16BEBCFB14A07FE000E2AA3F /* CoreData.framework */,
 				16BEBCE8149FAFAF00E2AA3F /* CoreLocation.framework */,
 				16BEBCC6149FA69D00E2AA3F /* MyLocations */,
 				16BEBCBF149FA69D00E2AA3F /* Frameworks */,
@@ -98,9 +114,14 @@
 		16BEBCC6149FA69D00E2AA3F /* MyLocations */ = {
 			isa = PBXGroup;
 			children = (
+				16BEBCFD14A0801700E2AA3F /* DataModel.xcdatamodeld */,
+				16BEBD0014A082BA00E2AA3F /* Location.h */,
+				16BEBD0114A082BB00E2AA3F /* Location.m */,
 				16BEBCCF149FA69D00E2AA3F /* AppDelegate.h */,
 				16BEBCD0149FA69D00E2AA3F /* AppDelegate.m */,
 				16BEBCD2149FA69D00E2AA3F /* MainStoryboard.storyboard */,
+				16BEBCF414A070D100E2AA3F /* HudView.h */,
+				16BEBCF514A070D100E2AA3F /* HudView.m */,
 				16BEBCD5149FA69D00E2AA3F /* CurrentLocationViewController.h */,
 				16BEBCD6149FA69D00E2AA3F /* CurrentLocationViewController.m */,
 				16BEBCEA149FFD1900E2AA3F /* LocationDetailsViewController.h */,
@@ -121,8 +142,10 @@
 		16BEBCC7149FA69D00E2AA3F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				16BEBCC8149FA69D00E2AA3F /* MyLocations-Info.plist */,
+				16BEBCF714A075CF00E2AA3F /* Checkmark.png */,
+				16BEBCF814A075CF00E2AA3F /* Checkmark@2x.png */,
 				16BEBCC9149FA69D00E2AA3F /* InfoPlist.strings */,
+				16BEBCC8149FA69D00E2AA3F /* MyLocations-Info.plist */,
 				16BEBCCC149FA69D00E2AA3F /* main.m */,
 				16BEBCCE149FA69D00E2AA3F /* MyLocations-Prefix.pch */,
 			);
@@ -186,6 +209,8 @@
 				16BEBCDB149FA69D00E2AA3F /* first@2x.png in Resources */,
 				16BEBCE0149FA69D00E2AA3F /* second.png in Resources */,
 				16BEBCE2149FA69D00E2AA3F /* second@2x.png in Resources */,
+				16BEBCF914A075CF00E2AA3F /* Checkmark.png in Resources */,
+				16BEBCFA14A075CF00E2AA3F /* Checkmark@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,6 +227,9 @@
 				16BEBCDE149FA69D00E2AA3F /* SecondViewController.m in Sources */,
 				16BEBCEC149FFD1900E2AA3F /* LocationDetailsViewController.m in Sources */,
 				16BEBCF314A0636C00E2AA3F /* CategoryPickerViewController.m in Sources */,
+				16BEBCF614A070D100E2AA3F /* HudView.m in Sources */,
+				16BEBCFF14A0801700E2AA3F /* DataModel.xcdatamodeld in Sources */,
+				16BEBD0214A082BB00E2AA3F /* Location.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,6 +343,19 @@
 			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		16BEBCFD14A0801700E2AA3F /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				16BEBCFE14A0801700E2AA3F /* DataModel.xcdatamodel */,
+			);
+			currentVersion = 16BEBCFE14A0801700E2AA3F /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 16BEBCB3149FA69C00E2AA3F /* Project object */;
 }

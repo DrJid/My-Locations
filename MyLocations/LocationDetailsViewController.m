@@ -8,22 +8,27 @@
 
 #import "LocationDetailsViewController.h"
 #import "CategoryPickerViewController.h"
+#import "HudView.h"
+#import "Location.h"
 
 
 @implementation LocationDetailsViewController
 {
     NSString *descriptionText;
     NSString *categoryName; //temporarily Store chosen category
+    NSDate *date;
 }
 
 @synthesize latitudeLabel, longitudeLabel, addressLabel, descriptionTextView, categoryLabel, dateLabel;
 @synthesize placemark, coordinate;
+@synthesize managedObjectContext;
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     if ((self = [super initWithCoder:aDecoder])) {
         descriptionText = @"";
         categoryName = @"No Category";
+        date = [NSDate date];
     }
     return  self;
 }
@@ -76,7 +81,7 @@
         self.addressLabel.text = @"No Address Found";
     }
     
-    self.dateLabel.text = [self formatDate:[NSDate date]];
+    self.dateLabel.text = [self formatDate:date];
 
     //We're employing the use of this gesture recognizer to help us remove the keyboard after user clicks the screen. 
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc]
@@ -119,9 +124,28 @@
 
 - (IBAction)done:(id)sender
 {
-    NSLog(@"Description is %@", descriptionText);
-    [self closeScreen]; 
+    HudView *hudView = [HudView hudInView:self.navigationController.view animated:YES];
+    hudView.text = @"Tagged!";
     
+    //We create new location object. But this is a mananged object thus it is created differently. 
+    Location *location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.managedObjectContext];
+    
+    location.locationDescription = descriptionText;
+    location.category = categoryName;
+    location.latitude = [NSNumber numberWithDouble:self.coordinate.latitude];
+    location.longitude = [NSNumber numberWithDouble:self.coordinate.longitude];
+    location.date = date;
+    location.placemark = self.placemark;
+    
+    
+    //This will take any objects that were added to the context and save these to dataStore. 
+    NSError *error;
+    if (![self.managedObjectContext save:&error]) {
+        FATAL_CORE_DATA_ERROR(error);
+        return;
+    }
+    
+    [self performSelector:@selector(closeScreen) withObject:nil afterDelay:0.6];    
 }
 - (IBAction)cancel:(id)sender
 {

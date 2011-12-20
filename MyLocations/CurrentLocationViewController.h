@@ -18,6 +18,6 @@
 @property (nonatomic,strong) IBOutlet UIButton *getButton;
 
 
-
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
 @end
