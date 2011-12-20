@@ -6,8 +6,7 @@
 //  Copyright (c) 2011 Grinnell College. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <CoreLocation/CoreLocation.h>
+
 
 @interface CurrentLocationViewController : UIViewController <CLLocationManagerDelegate>
 

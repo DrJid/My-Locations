@@ -7,6 +7,7 @@
 //
 
 #import "CurrentLocationViewController.h"
+#import "LocationDetailsViewController.h"
 
 //This is a class extension These methods need to be visible throughout the entire object. 
 @interface CurrentLocationViewController()
@@ -162,6 +163,18 @@
         
         [self updateLabels];
         [self configureGetButton];
+    }
+}
+
+
+//This allows us to send data from one screen to another. We set them up here in the prepareForSegue Method. Already created properties for these in the LcoationDeatails... of course.. and here is where we fill it up. 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"TagLocation"]) {
+        UINavigationController *navigationController = segue.destinationViewController;
+        LocationDetailsViewController *controller = (LocationDetailsViewController *)navigationController.topViewController;
+        controller.coordinate = location.coordinate;
+        controller.placemark = placemark;
     }
 }
 

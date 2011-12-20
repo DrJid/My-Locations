@@ -7,21 +7,27 @@
 //
 
 #import "LocationDetailsViewController.h"
+#import "CategoryPickerViewController.h"
 
 
 @implementation LocationDetailsViewController
-
-@synthesize delegate, latitudeLabel, longitudeLabel, addressLabel, descriptionTextView, categoryLabel, dateLabel;
-
-
-- (id)initWithStyle:(UITableViewStyle)style
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+    NSString *descriptionText;
+    NSString *categoryName; //temporarily Store chosen category
 }
+
+@synthesize latitudeLabel, longitudeLabel, addressLabel, descriptionTextView, categoryLabel, dateLabel;
+@synthesize placemark, coordinate;
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if ((self = [super initWithCoder:aDecoder])) {
+        descriptionText = @"";
+        categoryName = @"No Category";
+    }
+    return  self;
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -31,17 +37,53 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+- (NSString *)stringFromPlacemark:(CLPlacemark *)thePlacemark
+{
+    return [NSString stringWithFormat:@"%@ %@, %@, %@ %@, %@",
+            self.placemark.subThoroughfare, self.placemark.thoroughfare,
+            self.placemark.locality, self.placemark.administrativeArea,
+            self.placemark.postalCode, self.placemark.country];
+} 
+
+- (NSString *)formatDate:(NSDate *)theDate
+{
+    static NSDateFormatter *formatter = nil; //The static.. lazy loading. It will stay alive after the method has been called.. this way.. we wouldn't keep loading a formater every single time coz.. it takes a crap ton of resources. 
+    if (formatter == nil) {
+        formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateStyle:NSDateFormatterMediumStyle];
+        [formatter setTimeStyle:NSDateFormatterShortStyle];
+    }
+    
+    return [formatter stringFromDate:theDate];
+    
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.descriptionTextView.text = descriptionText;
+    self.categoryLabel.text = @"";
+    
+    self.latitudeLabel.text = [NSString stringWithFormat:@"%.8f",  self.coordinate.latitude];
+    self.longitudeLabel.text = [NSString stringWithFormat:@"%.8f", self.coordinate.longitude];
+    
+    if (self.placemark) {
+        self.addressLabel.text = [self stringFromPlacemark:self.placemark];
+    } else {
+        self.addressLabel.text = @"No Address Found";
+    }
+    
+    self.dateLabel.text = [self formatDate:[NSDate date]];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    //We're employing the use of this gesture recognizer to help us remove the keyboard after user clicks the screen. 
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc]
+                                                 initWithTarget:self action:@selector(hideKeyboard:)]; //Create the gesture recognizer object and give it a method to call. Target is the object that the method should be sent to. 
+    
+    gestureRecognizer.cancelsTouchesInView = NO;
+    [self.tableView addGestureRecognizer:gestureRecognizer]; //add it to the view. 
 }
 
 - (void)viewDidUnload
@@ -57,6 +99,19 @@
 
 }
 
+- (void)hideKeyboard:(UIGestureRecognizer *)gestureRecognizer
+{
+    CGPoint point = [gestureRecognizer locationInView:self.view];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
+    
+    if (indexPath != nil && indexPath.section == 0 & indexPath.row == 0) {
+        return;
+    }
+    
+    [self.descriptionTextView resignFirstResponder];
+}
+
+
 - (void)closeScreen
 {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
@@ -64,12 +119,22 @@
 
 - (IBAction)done:(id)sender
 {
+    NSLog(@"Description is %@", descriptionText);
     [self closeScreen]; 
     
 }
 - (IBAction)cancel:(id)sender
 {
     [self closeScreen];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"PickCategory"]) {
+        CategoryPickerViewController *controller = segue.destinationViewController;
+        controller.delegate = self;
+        controller.selectedCategoryName = categoryName;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -98,86 +163,67 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
-}
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
-}
+#pragma mark - UITableViewDelegate
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)theTableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        return 88;
+    } else if (indexPath.section == 2 && indexPath.row == 2) 
+    {
+        CGRect rect = CGRectMake(100, 10, 190, 1000);
+        self.addressLabel.frame = rect;
+        [self.addressLabel sizeToFit];
+        
+        rect.size.height = self.addressLabel.frame.size.height;
+        self.addressLabel.frame = rect;
+        
+        return self.addressLabel.frame.size.height + 20;
+    }else {
+        return 44;
     }
-    
-    // Configure the cell...
-    
-    return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+#pragma mark - UITextViewDelegate
+//to update the contents of the ivar whenever the textview has been changed. We use this ivar just to prevent from loosing the text someone's typing. 
+- (BOOL)textView:(UITextView *)theTextView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    descriptionText = [theTextView.text stringByReplacingCharactersInRange:range withString:text];
+    return  YES;
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)textViewDidEndEditing:(UITextView *)theTextView
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    descriptionText = theTextView.text;
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+//These methods to make the app a little more forgiving. Clicking the cell to trigger the keyboard and the textview. 
+
+//This limits taps on rows to just the cells in the first two sections. 
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section == 0 || indexPath.section == 1) {
+        return indexPath;
+    } else {
+        return  nil;
+    }
 }
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-#pragma mark - Table view delegate
-
+//handles taps on rows. 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        [self.descriptionTextView becomeFirstResponder];
+    }
+}
+
+-(void)categoryPicker:(CategoryPickerViewController *)picker didPickCategory:(NSString *)theCategoryName;
+{
+    categoryName = theCategoryName;
+    self.categoryLabel.text = categoryName;
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end
