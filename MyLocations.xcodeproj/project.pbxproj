@@ -21,6 +21,7 @@
 		16BEBCE0149FA69D00E2AA3F /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 16BEBCDF149FA69D00E2AA3F /* second.png */; };
 		16BEBCE2149FA69D00E2AA3F /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16BEBCE1149FA69D00E2AA3F /* second@2x.png */; };
 		16BEBCE9149FAFAF00E2AA3F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16BEBCE8149FAFAF00E2AA3F /* CoreLocation.framework */; };
+		16BEBCEC149FFD1900E2AA3F /* LocationDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16BEBCEB149FFD1900E2AA3F /* LocationDetailsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,8 @@
 		16BEBCDF149FA69D00E2AA3F /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
 		16BEBCE1149FA69D00E2AA3F /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
 		16BEBCE8149FAFAF00E2AA3F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		16BEBCEA149FFD1900E2AA3F /* LocationDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationDetailsViewController.h; sourceTree = "<group>"; };
+		16BEBCEB149FFD1900E2AA3F /* LocationDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationDetailsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +100,8 @@
 				16BEBCD2149FA69D00E2AA3F /* MainStoryboard.storyboard */,
 				16BEBCD5149FA69D00E2AA3F /* CurrentLocationViewController.h */,
 				16BEBCD6149FA69D00E2AA3F /* CurrentLocationViewController.m */,
+				16BEBCEA149FFD1900E2AA3F /* LocationDetailsViewController.h */,
+				16BEBCEB149FFD1900E2AA3F /* LocationDetailsViewController.m */,
 				16BEBCD8149FA69D00E2AA3F /* first.png */,
 				16BEBCDA149FA69D00E2AA3F /* first@2x.png */,
 				16BEBCDC149FA69D00E2AA3F /* SecondViewController.h */,
@@ -190,6 +195,7 @@
 				16BEBCD1149FA69D00E2AA3F /* AppDelegate.m in Sources */,
 				16BEBCD7149FA69D00E2AA3F /* CurrentLocationViewController.m in Sources */,
 				16BEBCDE149FA69D00E2AA3F /* SecondViewController.m in Sources */,
+				16BEBCEC149FFD1900E2AA3F /* LocationDetailsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

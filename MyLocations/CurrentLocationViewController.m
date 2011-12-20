@@ -123,6 +123,9 @@
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
         [locationManager startUpdatingLocation];
         updatingLocation = YES;
+        
+        //iOS will send didTimeOut to self after 60s. Rmb. Selector is the name of the method. 
+        [self performSelector:@selector(didTimeOut:) withObject:nil afterDelay:60];
     }
 }
 
@@ -138,9 +141,27 @@
 -(void)stopLocationManager
 {
     if (updatingLocation) {
+        
+        //Just as we schedule a call to didTimeout from startLocationManager, we need to cancel it when stopLocationManager is called. 
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(didTimeOut:) object:nil];
+        
         [locationManager stopUpdatingLocation];
         locationManager.delegate = nil;
         updatingLocation = NO;
+    }
+}
+
+- (void)didTimeOut:(id)obj
+{
+    NSLog(@"***Time out");
+    
+    if (location == nil) {
+        [self   stopLocationManager];
+        
+        lastLocationError = [NSError errorWithDomain:@"MyLocationsErrorDomain" code:1 userInfo:nil];
+        
+        [self updateLabels];
+        [self configureGetButton];
     }
 }
 
@@ -150,8 +171,11 @@
         [self stopLocationManager];
         
     } else { 
+        //We do these so that whenever the button is pressed, we start with a clean slate.
         location = nil;
         lastLocationError = nil;
+        placemark = nil;
+        lastGeocodingError = nil; 
         
         [self startLocationManager];
     }
@@ -199,6 +223,14 @@
 
         return;
     }
+    
+    //This calculates the distance between the new reading and the previous reading. 
+    CLLocationDistance distance= MAXFLOAT;
+    if (location != nil) {
+        distance = [newLocation distanceFromLocation:location];
+    }
+    
+    
     //This is where we determine if the new reading is more useful than the previous one. location will be nil if this is the first ever location were getting. 
     if (location == nil || location.horizontalAccuracy > newLocation.horizontalAccuracy) {
        NSLog(@"Called the checking method");
@@ -210,6 +242,10 @@
             NSLog(@"*** We're done!");
             [self stopLocationManager];
             [self configureGetButton];
+            
+            if (distance > 0) {
+                performingReverseGeocoding = NO;
+            }
             
             //Our Reversegeocoding magic -- GLGeocoder does not use a delegate.  but something called a block. 
             if (!performingReverseGeocoding) {
@@ -228,6 +264,15 @@
                     performingReverseGeocoding = NO;
                     [self updateLabels];
                 }];
+            }
+            
+        } else if (distance < 1.0) {
+            NSTimeInterval timeInterval = [newLocation.timestamp timeIntervalSinceDate:location.timestamp];
+            if (timeInterval > 10) {
+                NSLog(@"*** Force Done!");
+                [self stopLocationManager];
+                [self updateLabels];
+                [self configureGetButton];
             }
         }
     }
