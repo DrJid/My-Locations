@@ -29,6 +29,8 @@
 		16BEBCFC14A07FE000E2AA3F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16BEBCFB14A07FE000E2AA3F /* CoreData.framework */; };
 		16BEBCFF14A0801700E2AA3F /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 16BEBCFD14A0801700E2AA3F /* DataModel.xcdatamodeld */; };
 		16BEBD0214A082BB00E2AA3F /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 16BEBD0114A082BB00E2AA3F /* Location.m */; };
+		16BEBD0514A1358700E2AA3F /* LocationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16BEBD0414A1358600E2AA3F /* LocationsViewController.m */; };
+		16BEBD0814A13CC200E2AA3F /* LocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 16BEBD0714A13CC200E2AA3F /* LocationCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +66,10 @@
 		16BEBCFE14A0801700E2AA3F /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		16BEBD0014A082BA00E2AA3F /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
 		16BEBD0114A082BB00E2AA3F /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
+		16BEBD0314A1358500E2AA3F /* LocationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationsViewController.h; sourceTree = "<group>"; };
+		16BEBD0414A1358600E2AA3F /* LocationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationsViewController.m; sourceTree = "<group>"; };
+		16BEBD0614A13CC100E2AA3F /* LocationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationCell.h; sourceTree = "<group>"; };
+		16BEBD0714A13CC200E2AA3F /* LocationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,12 +128,16 @@
 				16BEBCD2149FA69D00E2AA3F /* MainStoryboard.storyboard */,
 				16BEBCF414A070D100E2AA3F /* HudView.h */,
 				16BEBCF514A070D100E2AA3F /* HudView.m */,
+				16BEBD0614A13CC100E2AA3F /* LocationCell.h */,
+				16BEBD0714A13CC200E2AA3F /* LocationCell.m */,
 				16BEBCD5149FA69D00E2AA3F /* CurrentLocationViewController.h */,
 				16BEBCD6149FA69D00E2AA3F /* CurrentLocationViewController.m */,
 				16BEBCEA149FFD1900E2AA3F /* LocationDetailsViewController.h */,
 				16BEBCEB149FFD1900E2AA3F /* LocationDetailsViewController.m */,
 				16BEBCF114A0636B00E2AA3F /* CategoryPickerViewController.h */,
 				16BEBCF214A0636C00E2AA3F /* CategoryPickerViewController.m */,
+				16BEBD0314A1358500E2AA3F /* LocationsViewController.h */,
+				16BEBD0414A1358600E2AA3F /* LocationsViewController.m */,
 				16BEBCD8149FA69D00E2AA3F /* first.png */,
 				16BEBCDA149FA69D00E2AA3F /* first@2x.png */,
 				16BEBCDC149FA69D00E2AA3F /* SecondViewController.h */,
@@ -230,6 +240,8 @@
 				16BEBCF614A070D100E2AA3F /* HudView.m in Sources */,
 				16BEBCFF14A0801700E2AA3F /* DataModel.xcdatamodeld in Sources */,
 				16BEBD0214A082BB00E2AA3F /* Location.m in Sources */,
+				16BEBD0514A1358700E2AA3F /* LocationsViewController.m in Sources */,
+				16BEBD0814A13CC200E2AA3F /* LocationCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
