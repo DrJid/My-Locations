@@ -19,8 +19,15 @@
 @property (nonatomic, retain) NSDate * date;
 @property (nonatomic, retain) NSString * locationDescription;
 @property (nonatomic, retain) NSString * category;
+@property (nonatomic, retain) NSNumber * photoId;
 
 //This used to be id but we changed it to CL Placemark coz we already knew what it was. 
 @property (nonatomic, retain) CLPlacemark * placemark;
+
+- (BOOL)hasPhoto;
+- (NSString *)photoPath;
+- (UIImage *)photoImage;
+
+- (void)removePhotoFile;
 
 @end

@@ -17,9 +17,13 @@
     NSString *descriptionText;
     NSString *categoryName; //temporarily Store chosen category
     NSDate *date;
+    UIImage *image;
+    UIActionSheet *actionSheet;
+    UIImagePickerController *imagePicker;
+    
 }
 
-@synthesize latitudeLabel, longitudeLabel, addressLabel, descriptionTextView, categoryLabel, dateLabel;
+@synthesize latitudeLabel, longitudeLabel, addressLabel, descriptionTextView, categoryLabel, dateLabel, imageView, photoLabel;
 @synthesize placemark, coordinate;
 @synthesize managedObjectContext;
 @synthesize locationToEdit;
@@ -30,10 +34,37 @@
         descriptionText = @"";
         categoryName = @"No Category";
         date = [NSDate date];
+        
+        //Listen in for notifications if the app enters the background
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(applicationDidEnterBackground)
+                                                     name:UIApplicationDidEnterBackgroundNotification
+                                                   object:nil];
     }
     return  self;
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationDidEnterBackgroundNotification
+                                                  object:nil];
+}
+
+- (void)applicationDidEnterBackground
+{
+    if (imagePicker) {
+        [self.navigationController dismissViewControllerAnimated:NO completion:nil];
+        imagePicker = nil;
+    }
+    
+    if (actionSheet) {
+        [actionSheet dismissWithClickedButtonIndex:actionSheet.cancelButtonIndex animated:NO];
+        actionSheet = nil;
+    }
+    
+    [self.descriptionTextView resignFirstResponder];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -64,6 +95,14 @@
     
 }
 
+- (void)showImage:(UIImage *)theImage
+{
+    self.imageView.image = theImage;
+    self.imageView.hidden = NO;
+    self.imageView.frame = CGRectMake(10, 10, 260, 260);
+    self.photoLabel.hidden = YES;
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -77,6 +116,17 @@
                                                   initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                   target:self
                                                   action:@selector(done:)];
+        
+        if ([self.locationToEdit hasPhoto] && image == nil) {
+            UIImage *existingImage = [self.locationToEdit photoImage];
+            if (existingImage) {
+                [self showImage:existingImage];
+            }
+        }
+    }
+    
+    if (image) {
+        [self showImage:image];
     }
     
     
@@ -129,6 +179,8 @@
     self.longitudeLabel = nil;
     self.addressLabel = nil;
     self.dateLabel = nil;
+    self.photoLabel = nil;
+    self.imageView = nil;
 
 }
 
@@ -150,6 +202,14 @@
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (int)nextPhotoId
+{
+    int PhotoId = [[NSUserDefaults standardUserDefaults] integerForKey:@"PhotoID"];
+    [[NSUserDefaults standardUserDefaults] setInteger:PhotoId+1 forKey:@"PhotoID"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    return PhotoId;
+}
+
 - (IBAction)done:(id)sender
 {
     HudView *hudView = [HudView hudInView:self.navigationController.view animated:YES];
@@ -163,6 +223,7 @@
     } else {
         hudView.text = @"Tagged!";
         location = [NSEntityDescription insertNewObjectForEntityForName:@"Location" inManagedObjectContext:self.managedObjectContext];
+        location.photoId = [NSNumber numberWithInt:-1];
     }
     //We create new location object. But this is a mananged object thus it is created differently. 
     
@@ -173,6 +234,18 @@
     location.date = date;
     location.placemark = self.placemark;
     
+    
+    if (image) {
+        if (![location hasPhoto]) {
+            location.photoId = [NSNumber numberWithInt:[self nextPhotoId]];
+        }
+        
+        NSData *data = UIImagePNGRepresentation(image);
+        NSError *error;
+        if (![data writeToFile:[location photoPath] options:NSDataWritingAtomic error:&error]) {
+            NSLog(@"Error writing file: %@", error);
+        }
+    }
     
     //This will take any objects that were added to the context and save these to dataStore. 
     NSError *error;
@@ -224,13 +297,59 @@
 }
 
 
+//To implement the PickerView, All we really need to do is to create this. The imagepickerView is built in... 
+- (void)takePhoto
+{
+    imagePicker= [[UIImagePickerController alloc] init];
+    
+    imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    imagePicker.delegate = self;
+    imagePicker.allowsEditing = YES;
+    
+    [self.navigationController presentViewController:imagePicker animated:YES completion:nil];
+}
 
+- (void)choosePhotoFromLibrary
+{
+    imagePicker= [[UIImagePickerController alloc] init];
+
+    imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    imagePicker.delegate = self;
+    imagePicker.allowsEditing = YES;
+    
+    [self.navigationController presentViewController:imagePicker animated:YES completion:nil];
+}
+
+- (void)showPhotoMenu
+{
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        actionSheet = [[UIActionSheet alloc]
+                                      initWithTitle:nil
+                                      delegate:self 
+                                      cancelButtonTitle:@"Cancel"
+                                      destructiveButtonTitle:nil
+                                      otherButtonTitles:@"Take Photo", @"Choose From Library", nil];
+        
+        [actionSheet showInView:self.view];
+        
+    } else {
+        [self choosePhotoFromLibrary];
+    }
+}
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)theTableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    
     if (indexPath.section == 0 && indexPath.row == 0) {
         return 88;
+    } else if (indexPath.section == 1) {
+        if (self.imageView.hidden) {
+            return 44;
+        } else {
+            return 280;
+        }
     } else if (indexPath.section == 2 && indexPath.row == 2) 
     {
         CGRect rect = CGRectMake(100, 10, 190, 1000);
@@ -277,6 +396,10 @@
     if (indexPath.section == 0 && indexPath.row == 0) {
         [self.descriptionTextView becomeFirstResponder];
     }
+    else if (indexPath.section == 1 && indexPath.row == 0) {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        [self showPhotoMenu];
+    }
 }
 
 -(void)categoryPicker:(CategoryPickerViewController *)picker didPickCategory:(NSString *)theCategoryName;
@@ -284,6 +407,39 @@
     categoryName = theCategoryName;
     self.categoryLabel.text = categoryName;
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    image = [info objectForKey:UIImagePickerControllerEditedImage];
+    
+    if ([self isViewLoaded]) {
+        [self showImage:image];
+        [self.tableView reloadData];
+    }
+
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    imagePicker = nil;
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker 
+{
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    imagePicker = nil;
+}
+
+#pragma mark - UIACtionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)theActionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        [self takePhoto];
+    } else if (buttonIndex == 1) {
+        [self choosePhotoFromLibrary];
+    }
+    actionSheet = nil;
 }
 
 @end
