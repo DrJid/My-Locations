@@ -38,8 +38,9 @@
         NSEntityDescription *entity = [NSEntityDescription entityForName:@"Location" inManagedObjectContext:self.managedObjectContext];
         fetchRequest.entity = entity; //  [fetchRequest setEntity:entity]; //See if this works???  //Tell the fetch request that wer're looking for Location entities. 
         
-        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES];
-        [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];  //Tells the fetchRequest that wer're going to sort by the date. 
+        NSSortDescriptor *sortDescriptor1 = [NSSortDescriptor sortDescriptorWithKey:@"category" ascending:YES];
+        NSSortDescriptor *sortDescriptor2 = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES];
+        [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor1, sortDescriptor2, nil]];  //Tells the fetchRequest that wer're going to sort by the date. update: We sorted by category AND THEN date. 
         
         fetchRequest.fetchBatchSize = 20; //[fetchRequest setFetchBatchSize:20];
         
@@ -47,7 +48,7 @@
         fetchedResultsController = [[NSFetchedResultsController alloc]
                                     initWithFetchRequest:fetchRequest
                                     managedObjectContext:self.managedObjectContext
-                                    sectionNameKeyPath:nil
+                                    sectionNameKeyPath:@"category" ////Fetched results will group the search restuls based on the value of the category attribute. 
                                     cacheName:@"Locations"]; //This needs to be unique name that NSFetchedResultsController uses to cache the search results. 
         
         fetchedResultsController.delegate = self;
@@ -141,6 +142,17 @@
                                           [location.latitude doubleValue],
                                           [location.longitude doubleValue]];
     }
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return [[self.fetchedResultsController sections] count];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    return [sectionInfo name];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

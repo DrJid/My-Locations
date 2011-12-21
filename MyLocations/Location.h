@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 
-@interface Location : NSManagedObject
+@interface Location : NSManagedObject <MKAnnotation> //We're gonna make our location objects conform to this protocol so that MapView can show them. 
 
 
 //Core Data stores everything as objects not as primitive values. 

@@ -31,6 +31,8 @@
 		16BEBD0214A082BB00E2AA3F /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 16BEBD0114A082BB00E2AA3F /* Location.m */; };
 		16BEBD0514A1358700E2AA3F /* LocationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16BEBD0414A1358600E2AA3F /* LocationsViewController.m */; };
 		16BEBD0814A13CC200E2AA3F /* LocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 16BEBD0714A13CC200E2AA3F /* LocationCell.m */; };
+		16BEBD0A14A18AA000E2AA3F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16BEBD0914A18AA000E2AA3F /* MapKit.framework */; };
+		16BEBD0D14A18B1F00E2AA3F /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16BEBD0C14A18B1F00E2AA3F /* MapViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +72,9 @@
 		16BEBD0414A1358600E2AA3F /* LocationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationsViewController.m; sourceTree = "<group>"; };
 		16BEBD0614A13CC100E2AA3F /* LocationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationCell.h; sourceTree = "<group>"; };
 		16BEBD0714A13CC200E2AA3F /* LocationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationCell.m; sourceTree = "<group>"; };
+		16BEBD0914A18AA000E2AA3F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		16BEBD0B14A18B1E00E2AA3F /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		16BEBD0C14A18B1F00E2AA3F /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16BEBD0A14A18AA000E2AA3F /* MapKit.framework in Frameworks */,
 				16BEBCFC14A07FE000E2AA3F /* CoreData.framework in Frameworks */,
 				16BEBCE9149FAFAF00E2AA3F /* CoreLocation.framework in Frameworks */,
 				16BEBCC1149FA69D00E2AA3F /* UIKit.framework in Frameworks */,
@@ -91,6 +97,7 @@
 		16BEBCB1149FA69C00E2AA3F = {
 			isa = PBXGroup;
 			children = (
+				16BEBD0914A18AA000E2AA3F /* MapKit.framework */,
 				16BEBCFB14A07FE000E2AA3F /* CoreData.framework */,
 				16BEBCE8149FAFAF00E2AA3F /* CoreLocation.framework */,
 				16BEBCC6149FA69D00E2AA3F /* MyLocations */,
@@ -138,6 +145,8 @@
 				16BEBCF214A0636C00E2AA3F /* CategoryPickerViewController.m */,
 				16BEBD0314A1358500E2AA3F /* LocationsViewController.h */,
 				16BEBD0414A1358600E2AA3F /* LocationsViewController.m */,
+				16BEBD0B14A18B1E00E2AA3F /* MapViewController.h */,
+				16BEBD0C14A18B1F00E2AA3F /* MapViewController.m */,
 				16BEBCD8149FA69D00E2AA3F /* first.png */,
 				16BEBCDA149FA69D00E2AA3F /* first@2x.png */,
 				16BEBCDC149FA69D00E2AA3F /* SecondViewController.h */,
@@ -242,6 +251,7 @@
 				16BEBD0214A082BB00E2AA3F /* Location.m in Sources */,
 				16BEBD0514A1358700E2AA3F /* LocationsViewController.m in Sources */,
 				16BEBD0814A13CC200E2AA3F /* LocationCell.m in Sources */,
+				16BEBD0D14A18B1F00E2AA3F /* MapViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
