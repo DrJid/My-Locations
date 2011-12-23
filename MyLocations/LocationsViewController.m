@@ -10,6 +10,8 @@
 #import "Location.h"
 #import "LocationCell.h"
 #import "LocationDetailsViewController.h"
+#import "UIImage+Resize.h"
+#import "NSMutableString+AddText.h"
 
 @implementation LocationsViewController 
 {
@@ -133,15 +135,28 @@
     }
     
     if (location.placemark) {
-        locationCell.addressLabel.text = [NSString stringWithFormat:@"%@ %@, %@",
-                                          location.placemark.subThoroughfare,
-                                          location.placemark.thoroughfare,
-                                          location.placemark.locality];
+        NSMutableString *string = [[NSMutableString alloc] initWithCapacity:100];
+        
+        [string addText:location.placemark.subThoroughfare withSeparator:@""];
+        [string addText:location.placemark.thoroughfare withSeparator:@" "];
+        [string addText:location.placemark.locality withSeparator:@", "];
+        
+        locationCell.addressLabel.text = string;
+        
     } else {
         locationCell.addressLabel.text = [NSString stringWithFormat:@"Lat: %.8f, Long:%.8f",
                                           [location.latitude doubleValue],
                                           [location.longitude doubleValue]];
     }
+    
+    UIImage *image = nil;
+    if ([location hasPhoto]) {
+        image = [location photoImage];
+        if (image) {
+            image = [image resizedImageWithBounds:CGSizeMake(66, 66)];
+        }
+    }
+    locationCell.imageView.image = image;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

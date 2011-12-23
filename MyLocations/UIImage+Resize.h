@@ -10,4 +10,5 @@
 
 @interface UIImage (Resize)
 
+- (UIImage *)resizedImageWithBounds:(CGSize)bounds;
 @end
